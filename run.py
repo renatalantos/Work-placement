@@ -1,57 +1,58 @@
 import subprocess
-"""
-We use Python subprocess module to execute system commands.
-"""
+import os
+import time
 
-
-def create_dir():
+def create_new_file():
     """
-    Creates a directory called experiment in the root directory.
+    Creates new file test_11.html.
     """
-    cmd = "mkdir experiment"
+    cmd = "touch test_11.html "
     returned_value = subprocess.call(cmd, shell=True)
-    print("1")
-create_dir()
+    print("Create new file.")
 
-
-def create_file_and_populate():
-    """
-    Creates a file called hello.txt in root directory and populates it
-    with print("Hello World") statement. Closes file after poulating.
-    No use of subprocess module here.
-    """
-    cmd = open("hello.txt", "w")
-    cmd.write('print("Hello World")')
-    cmd.close()
-    print("2")
-create_file_and_populate()
-
+create_new_file()
 
 def move_file_into_dir():
     """
-    Moves file hello.txt into experiment directory.
+    Moves file test_11.html into test_results directory.
     """
-    cmd = "mv hello.txt experiment"
+    cmd = "mv test_11.html test_results/branch_name1"
     returned_value = subprocess.call(cmd, shell=True)
-    print("3")
+    print("Move file into test_results directory.")
 move_file_into_dir()
 
-
-def run_file():
+def create_back_up_dir():
     """
-    Executes content of hello.txt file.
+    Creates backup directory.
+  
     """
-    cmd = "python3 experiment/hello.txt"
+    cmd = "mkdir test_results_back_up"
     returned_value = subprocess.call(cmd, shell=True)
-    print("4")
-run_file()
+    print("Creates backup directory.")
+
+create_back_up_dir()
 
 
-def delete_file():
+def move_folder_into_dir():
     """
-    Deletes hello.txt from experiment directory.
+    Move test_results folder into backup directory.
     """
-    cmd = "rm experiment/hello.txt"
+    cmd = "cp -r test_results test_results_back_up "
     returned_value = subprocess.call(cmd, shell=True)
-    print("5")
-delete_file()
+    print("Test result folder moved into new backup directory.")
+
+
+move_folder_into_dir()
+
+
+def change_name_to_time():
+    """
+    Renames test_results folder to test_results + timestamp.
+    """
+
+    os.rename(
+        "test_results_back_up/test_results",
+        time.strftime("test_results_back_up/test_results_%Y-%m-%d %H:%M:%S"),
+    )
+    print("Folder test_results renamed with timestamp.")
+change_name_to_time()
